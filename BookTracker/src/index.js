@@ -103,7 +103,7 @@ app.delete("/delete", async (req, res, next) => {
       `${process.env.BOOKSERVICE_URL}/delete`,
       { data: req.body },
     );
-    res.render("home");
+    res.send(response.data);
   } catch (err) {
     next(err);
   }
