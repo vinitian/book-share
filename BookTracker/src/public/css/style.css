@@ -139,6 +139,7 @@ input {
   .delete:hover {
     background: var(--red);
     color: var(--white);
+    border-radius: 4px;
   }
 }
 
