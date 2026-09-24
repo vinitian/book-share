@@ -1,4 +1,19 @@
-To start server:
+# BookTracker
+A personal book tracker where you can add and delete books as well as track your reading status of each book.
+
+
+## Installation
+
+1. Build Docker images
 ```
-npm run dev
+docker build -t booktrackerapp BookTracker
+docker build -t bookservice BookService
 ```
+
+2. Run Docker Compose
+```
+docker compose up
+```
+
+3. Done! Visit the server via `http://localhost:3000`
+
