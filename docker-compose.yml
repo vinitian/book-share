@@ -4,7 +4,7 @@ volumes:
 
 services:
   booktrackerapp:
-    image: booktrackerapp
+    image: vinitaj/booktrackerapp
     build: ./BookTracker
     ports:
       - 3000:3000
@@ -19,7 +19,7 @@ services:
       - mongodb
 
   bookservice:
-    image: bookservice
+    image: vinitaj/bookservice
     build: ./BookService
     ports:
       - 3001:3001

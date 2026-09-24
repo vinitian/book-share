@@ -1,0 +1,185 @@
+# Booktrackerapp
+# --------------------
+# - Deployment to launch 2 pods, each with a container of vinitaj/booktracker.
+# - Service (type: LoadBalancer) to open up the app to the world (localhost, at least).
+#
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: booktrackerapp-service
+  labels:
+    app: booktrackerapp
+spec:
+  type: LoadBalancer
+  ports:
+    - name: http
+      port: 3000
+      protocol: TCP
+  selector:
+    app: booktrackerapp
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: booktrackerapp
+  labels:
+    app: booktrackerapp
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: booktrackerapp
+  template:
+    metadata:
+      labels:
+        app: booktrackerapp
+    spec:
+      containers:
+        - name: booktrackerapp
+          image: vinitaj/booktrackerapp:latest
+          ports:
+            - containerPort: 3000
+          env:
+            - name: DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: mongodb-config
+                  key: db_host
+            - name: BOOKSERVICE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: mongodb-config
+                  key: bookservice_url
+
+---
+# BookService
+# --------------------
+# - Deployment to launch 3 pods, each with a container of vinitaj/bookservice.
+# - Service (type: LoadBalancer) to open up the app to the world (localhost, at least).
+#
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: bookservice-service
+  labels:
+    app: bookservice
+spec:
+  type: LoadBalancer
+  ports:
+    - name: http
+      port: 3001
+      protocol: TCP
+  selector:
+    app: bookservice
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bookservice
+  labels:
+    app: bookservice
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: bookservice
+  template:
+    metadata:
+      labels:
+        app: bookservice
+    spec:
+      containers:
+        - name: bookservice
+          image: vinitaj/bookservice:latest
+          ports:
+            - containerPort: 3001
+          env:
+            - name: DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: mongodb-config
+                  key: db_host
+
+---
+# MongoDB
+# --------------------
+# - one container in one pod running the image mongodb
+# - one headless service to access them.
+# - Two persistentVolumeClaims/mounts: textstore-data, and mongo-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongodb-service
+  labels:
+    app: mongodb
+spec:
+  ports:
+    - port: 27017
+      targetPort: mongodb-port
+  selector:
+    app: mongodb
+
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mongodb
+  labels:
+    app: mongodb
+spec:
+  serviceName: mongodb
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongodb
+  template:
+    metadata:
+      labels:
+        app: mongodb
+    spec:
+      containers:
+        - name: mongodb
+          image: mongo
+          ports:
+            - containerPort: 27017
+              name: mongodb-port
+          volumeMounts:
+            - name: mongodb-data
+              mountPath: /data/db
+            - name: mongo-config
+              mountPath: /data/configdb
+  volumeClaimTemplates:
+    - metadata:
+        name: mongodb-data
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 10Mi
+    - metadata:
+        name: mongo-config
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 5Mi
+
+---
+# ConfigMap to store DB_HOST variable in
+# --------------------
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mongodb-config
+  labels:
+    data: config
+data:
+  db_host: "NOTSET"
+  bookservice_url: http://bookservice-service:3001
+---
