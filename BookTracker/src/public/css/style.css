@@ -41,10 +41,11 @@ body {
   .nav-links {
     display: flex;
     gap: 4px;
-    button {
-    padding: 4px;
-    
-  }}
+    a {
+      color: var(--white);
+      padding: 4px;
+    }
+  }
 }
 
 .container {

@@ -2,5 +2,5 @@ mixin navbar
   .nav-bar
     a.app-title(href="/") BookTracker
     .nav-links
-      button.add-button(onclick="location.href='/add'") Add book
-      button.search-button(href="/") Search
+      a(href="/add") Add book
+      a(href="/search") Search
