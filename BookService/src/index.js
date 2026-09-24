@@ -28,6 +28,7 @@ const router = express.Router();
 router.get("/", getBooks);
 router.get("/search", searchBooks);
 router.post("/add", addBook);
+router.post("/set-status", setBookStatus);
 app.use("/", router);
 
 function getBooks(req, res) {
@@ -43,11 +44,10 @@ function getBooks(req, res) {
 }
 
 function searchBooks(req, res) {
+  // TODO: handle the EMPTY case?
   if (!req.query.q) return res.send("EMPTY");
-  console.log("hi");
   let searchTerm = req.query.q.replaceAll("+", " ").trim();
   let bookManager = new BookManager();
-  console.log("Searching for:", searchTerm);
   return bookManager
     .connect()
     .then(() => bookManager.searchBooks(searchTerm))
@@ -57,11 +57,9 @@ function searchBooks(req, res) {
           _id: r._id,
           title: r.title,
           author: r.author,
-          owner: r.owner,
-          borrower: r.borrower,
-          isBorrowed: r.isBorrowed,
-          datePosted: r.datePosted,
-          dateBorrowed: r.dateBorrowed,
+          status: r.status,
+          dateAdded: r.dateAdded,
+          dateModified: r.dateModified,
         };
       }),
     )
@@ -70,12 +68,21 @@ function searchBooks(req, res) {
 
 async function addBook(req, res) {
   const book = req.body;
-  console.log("body:", book);
   const bookManager = new BookManager();
   return bookManager
     .connect()
-    .then(() => bookManager.addBook(book.title, book.author, book.owner))
+    .then(() => bookManager.addBook(book.title, book.author))
     .then((book) => res.send(book));
+}
+
+async function setBookStatus(req, res) {
+  const bookId = req.body.id;
+  const status = req.body.newStatus;
+  const bookManager = new BookManager();
+  return bookManager
+    .connect()
+    .then(() => bookManager.setBookStatus(bookId, status))
+    .then((result) => res.send(result));
 }
 
 const server = app.listen(process.env.PORT || 3001, () => {

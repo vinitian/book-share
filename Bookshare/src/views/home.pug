@@ -1,13 +1,13 @@
 extends default
 
+//- TODO: add "Add book" button that redirects to /add page
 block content
   .home-search
-    h1.title Welcome to Book Share!
+    h1.title My Personal Library
     form(action='/search' method='GET')
-      input.home-input(autofocus='' placeholder='Search Book Share' type='search' name='q')
+      input.home-input(autofocus='' placeholder='Search Your Library...' type='search' name='q')
 
   .container
-    h2 hiiiiii
     ul.search-results
       include mixins/results
       +results(books)

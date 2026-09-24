@@ -30,16 +30,15 @@ class BookManager {
     return Book.find();
   }
 
-  addBook(title, author, owner) {
+  addBook(title, author) {
     console.log(`Adding "${title}"`);
+    const date = new Date();
     return new Book({
       title: title,
       author: author,
-      owner: owner,
-      borrower: null,
-      isBorrowed: false,
-      dateBorrowed: null,
-      datePosted: new Date(),
+      status: "owned",
+      dateAdded: date,
+      dateModified: date,
     })
       .save()
       .catch((err) => console.log("Error while inserting book:", err.message));
@@ -54,6 +53,17 @@ class BookManager {
       locale: "en",
       strength: 1,
     });
+  }
+
+  setBookStatus(bookId, status) {
+    return Book.updateOne(
+      { _id: bookId },
+      { $set: { status: status, dateModified: new Date() } },
+    );
+  }
+
+  deleteBook(bookId) {
+    return Book.deleteOne(bookId);
   }
 }
 
