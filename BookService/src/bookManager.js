@@ -63,7 +63,7 @@ class BookManager {
   }
 
   deleteBook(bookId) {
-    return Book.deleteOne(bookId);
+    return Book.deleteOne({ _id: bookId });
   }
 }
 

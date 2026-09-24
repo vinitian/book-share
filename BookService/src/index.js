@@ -29,6 +29,7 @@ router.get("/", getBooks);
 router.get("/search", searchBooks);
 router.post("/add", addBook);
 router.post("/set-status", setBookStatus);
+router.delete("/delete", deleteBook);
 app.use("/", router);
 
 function getBooks(req, res) {
@@ -82,6 +83,15 @@ async function setBookStatus(req, res) {
   return bookManager
     .connect()
     .then(() => bookManager.setBookStatus(bookId, status))
+    .then((result) => res.send(result));
+}
+
+async function deleteBook(req, res) {
+  const bookId = req.body.id;
+  const bookManager = new BookManager();
+  return bookManager
+    .connect()
+    .then(() => bookManager.deleteBook(bookId))
     .then((result) => res.send(result));
 }
 

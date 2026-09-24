@@ -1,26 +1,32 @@
 
 mixin results(books)
   script(src='/js/setBookStatus.js')
-  if !books
+  script(src='/js/deleteBook.js')  
+  if !books || !books.length
     //- TODO: link to Add page
     h2 No books yet. Perhaps add a new one?
   else
     each book in books
       li.news-article
-        a.title-link(target='_blank' rel='noreferrer noopener')
-          h3.title #{book.title}
-        .metadata by
-          |
-          |
-          span.author #{book.author}
-          |
-          | | Posted on
-          |
-          time.created-date #{dateFns.format(new Date(`${book.dateAdded}`), 'LLL dd, yyyy')}
-          
-        select.status(data-book-id=book._id)
-          option(value="owned", selected=(book.status=="owned")) Owned
-          option(value="reading", selected=(book.status=="reading")) Reading
-          option(value="finished", selected=(book.status=="finished")) Finished
-          option(value="will not finish", selected=(book.status=="will_not_finish")) Will not finish
-        button.btn.btn-default(type="button", data-dismiss="modal", onclick=`setBookStatus('${book._id}')`) Set Status
+        .content
+          a.title-link(target='_blank' rel='noreferrer noopener')
+            h3.title #{book.title}
+          .metadata by
+            |
+            |
+            span.author #{book.author}
+            |
+            | | Posted on
+            |
+            time.created-date #{dateFns.format(new Date(`${book.dateAdded}`), 'LLL dd, yyyy')}
+        
+        .actions
+          .status-selector
+            select.status(data-book-id=book._id)
+              option(value="owned", selected=(book.status=="owned")) Owned
+              option(value="reading", selected=(book.status=="reading")) Reading
+              option(value="finished", selected=(book.status=="finished")) Finished
+              option(value="will not finish", selected=(book.status=="will_not_finish")) Will not finish
+            button.btn.btn-default(type="button", data-dismiss="modal", onclick=`setBookStatus('${book._id}')`) Set Status
+
+          button.delete(type="button", onclick=`deleteBook('${book._id}')`) Delete

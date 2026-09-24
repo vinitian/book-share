@@ -95,6 +95,19 @@ app.post("/set-status", async (req, res, next) => {
     next(err);
   }
 });
+
+app.delete("/delete", async (req, res, next) => {
+  try {
+    const response = await axios.delete(
+      `${process.env.BOOKSERVICE_URL}/delete`,
+      { data: req.body },
+    );
+    res.render("home");
+  } catch (err) {
+    next(err);
+  }
+});
+
 const server = app.listen(process.env.PORT || 3000, () => {
   console.log(`BookShare server started on port: ${server.address().port}`);
 });
