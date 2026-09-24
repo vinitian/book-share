@@ -1,10 +1,10 @@
 extends default
 
 block content
-  include mixins/searchbar
-  +searchbar(searchQuery)
-
   .container
+    include mixins/searchbar
+    +searchbar(searchQuery)
+    
     if !books
       .result-count
         p No results found for your query:
