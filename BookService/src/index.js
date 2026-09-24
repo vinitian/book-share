@@ -1,5 +1,4 @@
 const express = require("express");
-// const cors = require("cors");
 const BookManager = require("./bookManager");
 
 const app = express();
@@ -10,19 +9,7 @@ app.use(function (err, req, res, next) {
   res.status(500).send("<h1>Internal Server Error</h1>");
 });
 
-// const corsOptions = {
-//   origin: "http://localhost:3000",
-// };
-// app.use(cors(corsOptions));
-
-// -- parse requests of content-type - application/json
 app.use(express.json());
-
-// For parsing application/x-www-form-urlencoded
-app.use(express.urlencoded({ extended: true }));
-
-// -- parse requests of content-type - application/x-www-form-urlencoded
-// app.use(express.urlencoded({ extended: true }));
 
 const router = express.Router();
 router.get("/", getBooks);
