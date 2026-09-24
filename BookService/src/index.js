@@ -32,7 +32,6 @@ function getBooks(req, res) {
 }
 
 function searchBooks(req, res) {
-  // TODO: handle the EMPTY case?
   if (!req.query.q) return res.send("EMPTY");
   let searchTerm = req.query.q.replaceAll("+", " ").trim();
   let bookManager = new BookManager();
