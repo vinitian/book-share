@@ -60,7 +60,6 @@ function searchBooks(req, res) {
           author: r.author,
           status: r.status,
           dateAdded: r.dateAdded,
-          dateModified: r.dateModified,
         };
       }),
     )

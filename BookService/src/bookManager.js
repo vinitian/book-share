@@ -38,7 +38,6 @@ class BookManager {
       author: author,
       status: "owned",
       dateAdded: date,
-      dateModified: date,
     })
       .save()
       .catch((err) => console.log("Error while inserting book:", err.message));
@@ -56,10 +55,7 @@ class BookManager {
   }
 
   setBookStatus(bookId, status) {
-    return Book.updateOne(
-      { _id: bookId },
-      { $set: { status: status, dateModified: new Date() } },
-    );
+    return Book.updateOne({ _id: bookId }, { $set: { status: status } });
   }
 
   deleteBook(bookId) {

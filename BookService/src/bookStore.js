@@ -6,7 +6,6 @@ var bookStoreSchema = new Schema({
   author: String,
   status: String,
   dateAdded: Date,
-  dateModified: Date,
 });
 
 module.exports = mongoose.model("bookStore", bookStoreSchema);
