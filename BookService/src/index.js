@@ -69,6 +69,7 @@ function searchBooks(req, res) {
       .then((result) =>
         result.flat().map((r) => {
           return {
+            _id: r._id,
             title: r.title,
             author: r.author,
             owner: r.owner,

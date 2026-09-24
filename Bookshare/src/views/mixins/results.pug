@@ -1,5 +1,6 @@
 
-mixin results
+mixin results(books)
+  script(src='/js/borrowBook.js')
   each book in books
     li.news-article
       a.title-link(target='_blank' rel='noreferrer noopener')
@@ -12,8 +13,8 @@ mixin results
         | | Posted on
         |
         time.created-date #{dateFns.format(new Date(`${book.datePosted}`), 'LLL dd, yyyy')}
-        span #{book.isBorrowed}
-    if book.isBorrowed
-      p "borrowed!"
-    else
-      button.btn.btn-default(type="button", data-dismiss="modal") Borrow
+        
+      if book.isBorrowed
+        p "borrowed!"
+      else
+        button.btn.btn-default(type="button", data-dismiss="modal", onclick=`borrowBook('${book._id}')`) Borrow
