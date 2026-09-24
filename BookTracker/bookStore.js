@@ -4,7 +4,11 @@ var Schema = mongoose.Schema;
 var bookStoreSchema = new Schema({
   title: String,
   author: String,
-  status: String,
+  status: {
+    type: String,
+    enum: ["owned", "reading", "finished", "will_not_finish"],
+    default: "owned",
+  },
   dateAdded: Date,
 });
 
