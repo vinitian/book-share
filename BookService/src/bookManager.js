@@ -15,15 +15,10 @@ class BookManager {
     }
 
     let connection = `mongodb://${dbServer}/${dbName}`;
-    return (
-      mongoose
-        .connect(connection)
-        //.then( () => console.log('Connected to database', dbName))
-        .catch((err) => {
-          console.error("Database connection error", dbName);
-          console.error(" trying to connect to server:", connection);
-        })
-    );
+    return mongoose.connect(connection).catch((err) => {
+      console.error("Database connection error", dbName);
+      console.error(" trying to connect to server:", connection);
+    });
   }
 
   getBooks() {
@@ -45,10 +40,9 @@ class BookManager {
 
   searchBooks(searchString) {
     console.log("Starting search for", searchString);
-    // TODO: search string in both title and author
-    return Book.find({
-      title: { $regex: searchString, $options: "i" },
-    }).collation({
+    const regex = { $regex: searchString, $options: "i" };
+    const query = { $or: [{ title: regex }, { author: regex }] };
+    return Book.find(query).collation({
       locale: "en",
       strength: 1,
     });
