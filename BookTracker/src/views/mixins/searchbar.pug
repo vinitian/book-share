@@ -1,0 +1,3 @@
+mixin searchbar(searchQuery)
+  form.search(action='/search' method='GET')
+    input.search-input(autofocus='' value=`${searchQuery || ''}` placeholder='Search Your Library...' type='search' name='q')

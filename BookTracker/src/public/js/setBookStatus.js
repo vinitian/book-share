@@ -1,8 +1,11 @@
 async function setBookStatus(id) {
   const newStatus = document.querySelector(
-    `.status[data-book-id="${id}"]`,
+    `.book-card[data-book-id="${id}"] .actions .status-selector select`,
   ).value;
-  console.log("NEW STATUS", newStatus, "|", id);
+  const button = document.querySelector(
+    `.book-card[data-book-id="${id}"] .actions .status-selector button`,
+  );
+
   const response = await fetch("/set-status", {
     method: "POST",
     headers: {
@@ -15,5 +18,6 @@ async function setBookStatus(id) {
     throw new Error("Failed to set book status");
   }
 
+  button.textContent = "Status set!";
   return response.json();
 }

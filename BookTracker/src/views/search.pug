@@ -1,10 +1,8 @@
 extends default
 
 block content
-  header
-    a.logo(href='/') Book Share
-    form(action='/search' method='GET')
-      input.search-input(autofocus='' value=`${searchQuery || ''}` placeholder='Search a book...' type='search' name='q')
+  include mixins/searchbar
+  +searchbar(searchQuery)
 
   .container
     if !books

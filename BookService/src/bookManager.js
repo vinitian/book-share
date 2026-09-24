@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 var dbServer = "127.0.0.1:27017";
 const dbPort = "27017";
-const dbName = "bookshare-db";
+const dbName = "booktracker-db";
 const Book = require("./bookStore");
 
 class BookManager {

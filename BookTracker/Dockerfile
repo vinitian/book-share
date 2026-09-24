@@ -4,5 +4,5 @@ EXPOSE 3000
 WORKDIR /app
 COPY . .
 RUN npm install
-ENV DEBUG='bookshareapp:*'
+ENV DEBUG='booktrackerapp:*'
 ENTRYPOINT ["npm", "run", "dev"]

@@ -50,9 +50,7 @@ app.post("/add", async (req, res, next) => {
       `${process.env.BOOKSERVICE_URL}/add`,
       req.body,
     );
-    res.render("add", {
-      bookAdded: true,
-    });
+    res.json(response.data);
   } catch (err) {
     next(err);
   }
@@ -90,7 +88,7 @@ app.post("/set-status", async (req, res, next) => {
       `${process.env.BOOKSERVICE_URL}/set-status`,
       req.body,
     );
-    return response.data;
+    res.json(response.data);
   } catch (err) {
     next(err);
   }
@@ -109,5 +107,5 @@ app.delete("/delete", async (req, res, next) => {
 });
 
 const server = app.listen(process.env.PORT || 3000, () => {
-  console.log(`BookShare server started on port: ${server.address().port}`);
+  console.log(`BookTracker server started on port: ${server.address().port}`);
 });

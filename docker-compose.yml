@@ -3,13 +3,14 @@ volumes:
   mongo-config:
 
 services:
-  bookshareapp:
-    image: bookshareapp
-    build: ./Bookshare
+  booktrackerapp:
+    image: booktrackerapp
+    build: ./BookTracker
     ports:
       - 3000:3000
     volumes:
-      - ./Bookshare:/app
+      - ./BookTracker:/app
+      - /app/node_modules
     environment:
       PORT: 3000  
       BOOKSERVICE_URL: http://bookservice:3001
@@ -24,6 +25,7 @@ services:
       - 3001:3001
     volumes:
       - ./BookService:/app
+      - /app/node_modules
     # deploy:
     #   replicas: 1
     environment:

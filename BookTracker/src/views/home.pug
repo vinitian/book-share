@@ -1,0 +1,15 @@
+extends default
+
+//- TODO: add "Add book" button that redirects to /add page
+block content
+  .container
+    include mixins/searchbar
+    +searchbar()
+    
+    h2.subtitle All Books 
+    ul.search-results
+      if !books || !books.length
+        h2 No books yet. Perhaps add a new one?
+      else
+        include mixins/results
+        +results(books)
