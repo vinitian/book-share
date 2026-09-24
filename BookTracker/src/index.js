@@ -67,7 +67,10 @@ app.get("/search", async (req, res, next) => {
   try {
     const searchQuery = req.query.q;
     if (!searchQuery) {
-      res.redirect(302, "/");
+      const results = await getBooks();
+      res.render("search", {
+        books: results,
+      });
       return;
     }
 
