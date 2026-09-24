@@ -1,0 +1,33 @@
+extends default
+
+block content
+  header
+    a.logo(href='/') Book Share
+    form(action='/search' method='GET')
+      input.search-input(autofocus='' value=`${searchQuery || ''}` placeholder='Search a book...' type='search' name='q')
+
+  .container
+    if !books
+      .result-count
+        p No results found for your query:
+        |
+        strong #{searchQuery}
+    else
+      ul.search-results
+        each book in books
+          li.news-article
+            a.title-link(target='_blank' rel='noreferrer noopener')
+              h3.title #{book.title}
+            .metadata by
+              |
+              |
+              span.author #{book.author}
+              |
+              | | Posted on
+              |
+              time.created-date #{dateFns.format(new Date(`${book.datePosted}`), 'LLL dd, yyyy')}
+              span #{book.isBorrowed}
+          if book.isBorrowed
+            p "borrowed!"
+          else
+            button.btn.btn-default(type="button", data-dismiss="modal") Borrow

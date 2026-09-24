@@ -1,0 +1,42 @@
+volumes:
+  mongodb-data:
+  mongo-config:
+
+services:
+  bookshareapp:
+    image: bookshareapp
+    build: ./Bookshare
+    ports:
+      - 3000:3000
+    volumes:
+      - ./Bookshare:/app
+    environment:
+      PORT: 3000  
+      BOOKSERVICE_URL: http://bookservice:3001
+      DB_HOST: mongodb
+    depends_on:
+      - mongodb
+
+  bookservice:
+    image: bookservice
+    build: ./BookService
+    ports:
+      - 3001:3001
+    volumes:
+      - ./BookService:/app
+    # deploy:
+    #   replicas: 1
+    environment:
+      DB_HOST: mongodb
+    depends_on:
+      - mongodb
+      
+  mongodb:
+    image: mongo
+    restart: always
+    command: --quiet --syslog
+    expose:
+      - "27017"
+    volumes:
+      - mongodb-data:/data/db
+      - mongo-config:/data/configdb

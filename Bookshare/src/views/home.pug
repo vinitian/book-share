@@ -1,0 +1,23 @@
+extends default
+
+block content
+  .home-search
+    h1.title Welcome to Book Share!
+    form(action='/search' method='GET')
+      input.home-input(autofocus='' placeholder='Search Book Share' type='search' name='q')
+
+  .container
+    h2 hiiiiii
+    ul.search-results
+      each book in books
+        li.news-article
+          a.title-link(target='_blank' rel='noreferrer noopener')
+            h3.title #{book.title}
+          .metadata by
+            |
+            |
+            span.author #{book.author}
+            |
+            | | Posted on
+            |
+            time.created-date #{dateFns.format(new Date(`${book.datePosted}`), 'LLL dd, yyyy')}

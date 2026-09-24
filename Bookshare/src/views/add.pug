@@ -1,0 +1,30 @@
+extends default 
+
+block content
+  body
+    p test
+    .modal-dialog
+        .modal-content
+
+          .modal-header
+            button.close(type="button", data-dismiss="modal")
+              span(aria-hidden="true") ×
+              span.sr-only Close
+            h4#myModalLabel.modal-title
+              | Post a Book
+
+          .modal-body
+            //#editForm.form(role='form' method='GET' action='https://www.google.com/')
+            form(role='form' method='POST' action=`${BOOKSERVICE_URL}/add`)
+              div.form-group
+                label(for='title') Title:
+                input#title.form-control(type='text', placeholder='Metamorphosis' name='title')
+              div.form-group
+                label(for='author') Author:
+                input#author.form-control(type='text', placeholder='Franz Kafka' name='author')
+              div.form-group
+                label(for='owner') Poster:
+                input#owner.form-control(type='text', placeholder='Your name' name='owner')
+              button.btn.btn-primary(type="submit") Submit
+              button.btn.btn-default(type="button", data-dismiss="modal")
+                | Close
