@@ -51,11 +51,16 @@ body {
 .container {
   display: flex;
   flex-direction: column;
+  text-align: center;
   gap: 32px;
   width: 100%;
   max-width: 1000px;
   padding: 10px 20px 40px;
   margin: 10px 0;
+
+  &.add-page {
+    align-items: center;
+  }
 }
 
 .app-title {
@@ -76,50 +81,14 @@ a:hover {
   text-decoration: underline;
 }
 
-a.button {
-  border: 2px solid #004400;
-  color: var(--dark-green);
-  border-radius: 4px;
-  padding: 6px 24px;
-  font-size: 14px;
-  font-weight: 400;
-}
-
-a.button:hover {
-  text-decoration: none;
-  background-color: var(--dark-green);
-  color: var(--light-orange);
-}
-
-/* header {
-  width: 100%;
-  height: 50px;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  display: flex;
-  justify-content: space-between;
-  background-color: var(--light-orange);
-  padding: 5px 10px;
-  align-items: center;
-} */
-
-.logo {
-  color: #002200;
-  flex-basis: 10%;
-}
-
 form {
   flex-basis: 50%;
   flex-grow: 1;
   flex-shrink: 1;
-  height: calc(100% - 10px);
-  /* margin-left: 10px; */
-  /* margin-right: 10px; */
+  
 }
 
-.search-input {
+input {
   outline: none;
   box-shadow: none;
   background-color: transparent;
@@ -130,12 +99,6 @@ form {
   font-size: 16px;
   line-height: 1.4;
   padding-left: 5px;
-}
-
-.result-count {
-  color: var(--dark-grey);
-  text-align: center;
-  margin-bottom: 15px;
 }
 
 .search-results {
@@ -185,59 +148,24 @@ form {
   flex-direction: column;
 }
 
-.article-image {
-  width: 200px;
-  flex-grow: 0;
-  flex-shrink: 0;
-  margin-left: 20px;
-}
+#add-book-form {
+  width: 100%;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  text-align: start;
+  font-weight: bold;
 
-.description {
-  color: var(--dark-grey);
-  margin-bottom: 15px;
-}
-
-.date-added {
-  font-size: 14px;
-}
-
-.pagination {
-  margin-top: 20px;
-}
-
-.previous-page {
-  margin-right: 20px;
-}
-
-@media screen and (max-width: 550px) {
-  /* header {
+  .form-group {
+    display: flex;
     flex-direction: column;
-    height: auto;
-    padding-bottom: 10px;
-  } */
-
-  .logo {
-    display: inline-block;
-    margin-bottom: 10px;
+    gap: 4px;
   }
 
-  form, .search-input {
-    width: 100%;
-  }
-
-  .github-button {
-    display: none;
-  }
-
-  .title {
-    font-size: 18px;
-  }
-
-  .description {
-    font-size: 14px;
-  }
-
-  .article-image {
-    display: none;
+  button {
+    padding: 12px;
+    width: 50%;
+    align-self: center;
   }
 }

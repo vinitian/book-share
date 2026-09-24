@@ -6,10 +6,11 @@ block content
     include mixins/searchbar
     +searchbar()
     
-    h2.subtitle All Books 
-    ul.search-results
-      if !books || !books.length
-        h2 No books yet. Perhaps add a new one?
-      else
+    h2.subtitle All Books
+
+    if !books || !books.length
+        p No books yet. Click "Add book" to start your library!
+    else 
+      ul.search-results
         include mixins/results
         +results(books)

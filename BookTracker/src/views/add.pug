@@ -1,16 +1,18 @@
 extends default 
 
 block content
-  h2 Add a Book
+  .container.add-page
+    h2 Add Book
 
-  .modal-body
-    form(role='form' method='POST' action="/add")
+    form#add-book-form(role='form' method='POST' action="/add")
       div.form-group.title
-        label(for='title') Title:
+        label(for='title') Title
         input#title.form-control(type='text', placeholder='Metamorphosis' name='title')
+      
       div.form-group.author
-        label(for='author') Author:
+        label(for='author') Author
         input#author.form-control(type='text', placeholder='Franz Kafka' name='author')
+      
       button.btn.btn-primary(type="submit") Submit
       p#book-added-text
         
