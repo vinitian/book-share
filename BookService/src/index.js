@@ -25,7 +25,7 @@ function getBooks(req, res) {
     .connect()
     .then(() => bookManager.getBooks())
     .then((r) => {
-      console.log("Number of results:", r.length);
+      console.log(`Fetched ${r.length} book(s)`);
       return r;
     })
     .then((cleaned) => res.send(cleaned));
@@ -49,6 +49,9 @@ function searchBooks(req, res) {
         };
       }),
     )
+    .then((r) => {
+      console.log(`Fetched ${r.length} book(s) with query "${searchTerm}"`);
+    })
     .then((cleaned) => res.send(cleaned));
 }
 
@@ -58,6 +61,9 @@ async function addBook(req, res) {
   return bookManager
     .connect()
     .then(() => bookManager.addBook(book.title, book.author))
+    .then((r) => {
+      console.log(`Added "${book.title}" by ${book.author}`);
+    })
     .then((book) => res.send(book));
 }
 
@@ -68,6 +74,9 @@ async function setBookStatus(req, res) {
   return bookManager
     .connect()
     .then(() => bookManager.setBookStatus(bookId, status))
+    .then((r) =>
+      console.log(`Changed status of book ID ${bookId} to "${status}"`),
+    )
     .then((result) => res.send(result));
 }
 
@@ -77,6 +86,9 @@ async function deleteBook(req, res) {
   return bookManager
     .connect()
     .then(() => bookManager.deleteBook(bookId))
+    .then((r) => {
+      console.log(`Deleted "${book.title}" by ${book.author} || ${r}`);
+    })
     .then((result) => res.send(result));
 }
 

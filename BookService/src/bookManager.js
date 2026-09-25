@@ -26,7 +26,6 @@ class BookManager {
   }
 
   addBook(title, author) {
-    console.log(`Adding "${title}"`);
     const date = new Date();
     return new Book({
       title: title,
@@ -39,7 +38,6 @@ class BookManager {
   }
 
   searchBooks(searchString) {
-    console.log("Starting search for", searchString);
     const regex = { $regex: searchString, $options: "i" };
     const query = { $or: [{ title: regex }, { author: regex }] };
     return Book.find(query).collation({
