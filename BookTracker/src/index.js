@@ -85,9 +85,9 @@ app.get("/search", async (req, res, next) => {
   }
 });
 
-app.post("/set-status", async (req, res, next) => {
+app.patch("/set-status", async (req, res, next) => {
   try {
-    const response = await axios.post(
+    const response = await axios.patch(
       `${process.env.BOOKSERVICE_URL}/set-status`,
       req.body,
     );

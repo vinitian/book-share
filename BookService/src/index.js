@@ -15,7 +15,7 @@ const router = express.Router();
 router.get("/", getBooks);
 router.get("/search", searchBooks);
 router.post("/add", addBook);
-router.post("/set-status", setBookStatus);
+router.patch("/set-status", setBookStatus);
 router.delete("/delete", deleteBook);
 app.use("/", router);
 

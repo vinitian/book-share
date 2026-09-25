@@ -7,7 +7,7 @@ async function setBookStatus(id) {
   );
 
   const response = await fetch("/set-status", {
-    method: "POST",
+    method: "PATCH",
     headers: {
       "Content-Type": "application/json",
     },
